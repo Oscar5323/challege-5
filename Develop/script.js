@@ -3,9 +3,18 @@
 // in the html.
 
 // current date and time having the dayjs() with nothing inside the parenthesis makes it show current time
+function gintime(){
 var currentday = dayjs();
-$('#currentDay').text(currentday);
+$('#currentDay').text(currentday);}
 
+setInterval(gintime,1000)
+  
+
+
+
+
+  
+  
 
 
 
