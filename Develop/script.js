@@ -2,28 +2,56 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
+let dt = new Date();
+
 // current date and time having the dayjs() with nothing inside the parenthesis makes it show current time
 function gintime(){
-var currentday = dayjs().format('MMMM ddd DD,YYYY');
-$('#currentDay').text(currentday);}
+var currentday = dayjs().format('MMMM DD,YYYY:hh:mma');
+$('#currentDay').text(currentday);
+}
+// refresh on the currentday
+setInterval(gintime,1000);
 
-setInterval(gintime,1000)
+//
+function return_tense(hour){
 
+  let current_hour = dt.getHours()
+
+  if (hour < current_hour) {
+    return "past"
+  } else if (hour == current_hour) {
+    return "present"
+  } else { 
+    return "future"
+  }
+}
+
+//to set the hours anthing below 12 stays as is and anything over 12 gets subtracted
+function return_hour(hour) {
+  if (hour <= 11) {
+    return hour+' AM'
+  } else {
+    if (hour > 12) {
+    return hour-12 +' PM'
+    } else {
+      return hour+' PM'
+    }
+  }
+}
 
 
 
 for (var index = 9; index < 18; index++) {
                               
- $('#container-fluid').append('<div id="hour-'+ index +'" class="row time-block past"><div class="col-2 col-md-1 hour text-center py-3">'+ index +'</div><textarea class="col-8 col-md-10 description" rows="3"></textarea><button class="btn saveBtn col-2 col-md-1" aria-label="save"><i class="fas fa-save" aria-hidden="true"></i></button></div>')
-  
+ $('#container-fluid').append(`<div id="hour-${index}" class="row time-block ${return_tense(index)}">
+ <div class="col-2 col-md-1 hour text-center py-3">${return_hour(index)}</div>
+  <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">"section"</textarea>
+  <button id="btn" class="btn saveBtn col-2 col-md-1" aria-label="save">
+   <i class="fas fa-save" aria-hidden="true"></i>
+  </button>
+ </div>`)
   
 }
-
-
-
-  
-  
-
 
 
 
