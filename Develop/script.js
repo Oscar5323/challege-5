@@ -44,18 +44,32 @@ var text = {}
 
 function savedata(){
 localStorage.setItem("text",JSON.stringify(text))
-
 }
 
-function savetext(id){
-  text[id] = ('#text-' + id)
+function test_txt(){
+  for (var index = 9; index < 18; index++) {
+    text[index] = local_text;
+  }
+}
+
+function set_text(){
+  var local = JSON.parse(localStorage.getItem("text"))
+  // if empty place local text
+ if (local === null) {
+  test_txt()
+ } else {
+  //checks the array 
+  for (var index = 9; index < 18; index++) {
+    text[index] = local[index]
+  }
+ }
 }
 
 for (var index = 9; index < 18; index++) {
                               
  $('#container-fluid').append(`<div id="hour-${index}" class="row time-block ${return_tense(index)}">
  <div class="col-2 col-md-1 hour text-center py-3">${return_hour(index)}</div>
-  <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">${text}</textarea>
+  <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">${text[index]}</textarea>
   <button id="btn" onclick=savetext(${index}) class="btn saveBtn col-2 col-md-1" aria-label="save">
    <i class="fas fa-save" aria-hidden="true"></i>
   </button>
