@@ -9,10 +9,10 @@ function gintime(){
 var currentday = dayjs().format('MMMM DD,YYYY:hh:mma');
 $('#currentDay').text(currentday);
 }
-// refresh on the currentday
+// refreshes every second 
 setInterval(gintime,1000);
 
-//
+//the function sets a if statement to give past, present and future
 function return_tense(hour){
 
   let current_hour = dt.getHours()
@@ -39,14 +39,24 @@ function return_hour(hour) {
   }
 }
 
+var local_text = ""
+var text = {}
 
+function savedata(){
+localStorage.setItem("text",JSON.stringify(text))
+
+}
+
+function savetext(id){
+  text[id] = ('#text-' + id)
+}
 
 for (var index = 9; index < 18; index++) {
                               
  $('#container-fluid').append(`<div id="hour-${index}" class="row time-block ${return_tense(index)}">
  <div class="col-2 col-md-1 hour text-center py-3">${return_hour(index)}</div>
-  <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">"section"</textarea>
-  <button id="btn" class="btn saveBtn col-2 col-md-1" aria-label="save">
+  <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">${text}</textarea>
+  <button id="btn" onclick=savetext(${index}) class="btn saveBtn col-2 col-md-1" aria-label="save">
    <i class="fas fa-save" aria-hidden="true"></i>
   </button>
  </div>`)
@@ -63,25 +73,7 @@ for (var index = 9; index < 18; index++) {
 
 
 
-
-
-
-
-
-
 $(function () {
-  
-  
-
-
-
-
-
-
-
-
-  
-
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
