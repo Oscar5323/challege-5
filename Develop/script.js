@@ -4,7 +4,7 @@
 
 var dt = new Date();
 
-var local_text = "."
+var local_text = ""
 var schedule = {}
 var storage_item = "schedule"
 
@@ -58,6 +58,7 @@ if (take === null) {
   console.log(schedule)
   
 }
+make_section()
 }
 
 function create_sch(){
