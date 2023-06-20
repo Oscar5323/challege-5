@@ -4,8 +4,9 @@
 
 var dt = new Date();
 
-var local_text = ""
-var text1 = {}
+var local_text = "."
+var schedule = {}
+var storage_item = "schedule"
 
 // current date and time having the dayjs() with nothing inside the parenthesis makes it show current time
 function gentime(){
@@ -42,13 +43,28 @@ function return_hour(hour) {
 
 
 function savedata(){
-localStorage.setItem("zoom",JSON.stringify(text1))
+localStorage.setItem(storage_item,JSON.stringify(schedule))
 }
 
-function test_txt(){
-  for (var i = 9; i < 18; i++) {
-    text1[i] = local_text;
+function get_data(){
+var take = JSON.parse(localStorage.getItem(storage_item))
+if (take === null) {
+  create_sch()
+  
+}else{
+  for(x=9; x<18; x++){
+    schedule[x] = take[x]
   }
+  console.log(schedule)
+  
+}
+}
+
+function create_sch(){
+  for (var i = 9; i < 18; i++) {
+    schedule[i] = local_text;
+  }
+  savedata()
 }
 
 function make_section() {
@@ -57,7 +73,7 @@ function make_section() {
                               
     $('#container-fluid').append(`<div id="hour-${index}" class="row time-block ${return_tense(index)}">
     <div class="col-2 col-md-1 hour text-center py-3">${return_hour(index)}</div>
-     <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">${text1[index]}</textarea>
+     <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">${schedule[index]}</textarea>
      <button id="btn" onclick=save_schedule_item(${index}) class="btn saveBtn col-2 col-md-1" aria-label="save">
       <i class="fas fa-save" aria-hidden="true"></i>
      </button>
@@ -65,6 +81,8 @@ function make_section() {
      
    }
 }
+
+get_data()
 
 // refreshes every second 
 setInterval(gentime,1000);
