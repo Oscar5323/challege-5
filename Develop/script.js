@@ -2,20 +2,21 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
-let dt = new Date();
+var dt = new Date();
+
+var local_text = ""
+var text1 = {}
 
 // current date and time having the dayjs() with nothing inside the parenthesis makes it show current time
-function gintime(){
+function gentime(){
 var currentday = dayjs().format('MMMM DD,YYYY:hh:mma');
 $('#currentDay').text(currentday);
 }
-// refreshes every second 
-setInterval(gintime,1000);
 
 //the function sets a if statement to give past, present and future
 function return_tense(hour){
 
-  let current_hour = dt.getHours()
+  var current_hour = dt.getHours()
 
   if (hour < current_hour) {
     return "past"
@@ -39,43 +40,38 @@ function return_hour(hour) {
   }
 }
 
-var local_text = ""
-var text = {}
 
 function savedata(){
-localStorage.setItem("text",JSON.stringify(text))
+localStorage.setItem("zoom",JSON.stringify(text1))
 }
 
 function test_txt(){
-  for (var index = 9; index < 18; index++) {
-    text[index] = local_text;
+  for (var i = 9; i < 18; i++) {
+    text1[i] = local_text;
   }
 }
 
-function set_text(){
-  var local = JSON.parse(localStorage.getItem("text"))
-  // if empty place local text
- if (local === null) {
-  test_txt()
- } else {
-  //checks the array 
-  for (var index = 9; index < 18; index++) {
-    text[index] = local[index]
-  }
- }
-}
+function make_section() {
 
-for (var index = 9; index < 18; index++) {
+  for (var index = 9; index < 18; index++) {
                               
- $('#container-fluid').append(`<div id="hour-${index}" class="row time-block ${return_tense(index)}">
- <div class="col-2 col-md-1 hour text-center py-3">${return_hour(index)}</div>
-  <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">${text[index]}</textarea>
-  <button id="btn" onclick=savetext(${index}) class="btn saveBtn col-2 col-md-1" aria-label="save">
-   <i class="fas fa-save" aria-hidden="true"></i>
-  </button>
- </div>`)
-  
+    $('#container-fluid').append(`<div id="hour-${index}" class="row time-block ${return_tense(index)}">
+    <div class="col-2 col-md-1 hour text-center py-3">${return_hour(index)}</div>
+     <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">${text1[index]}</textarea>
+     <button id="btn" onclick=save_schedule_item(${index}) class="btn saveBtn col-2 col-md-1" aria-label="save">
+      <i class="fas fa-save" aria-hidden="true"></i>
+     </button>
+    </div>`)
+     
+   }
 }
+
+// refreshes every second 
+setInterval(gentime,1000);
+
+
+//First you need to get data using localStorage.getItem and then assign it to textarea using .value property
+
 
 
 
