@@ -67,6 +67,10 @@ function create_sch(){
   }
   savedata()
 }
+function save_schedule(dixon){
+  schedule[dixon] = $("#text-"+ dixon).val()
+  savedata()
+}
 
 function make_section() {
 
@@ -75,7 +79,7 @@ function make_section() {
     $('#container-fluid').append(`<div id="hour-${index}" class="row time-block ${return_tense(index)}">
     <div class="col-2 col-md-1 hour text-center py-3">${return_hour(index)}</div>
      <textarea id="text-${index}" class="col-8 col-md-10 description" rows="3">${schedule[index]}</textarea>
-     <button id="btn" onclick=save_schedule_item(${index}) class="btn saveBtn col-2 col-md-1" aria-label="save">
+     <button id="btn-${index}" onclick=save_schedule(${index}) class="btn saveBtn col-2 col-md-1" aria-label="save">
       <i class="fas fa-save" aria-hidden="true"></i>
      </button>
     </div>`)
