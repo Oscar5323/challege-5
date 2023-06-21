@@ -41,11 +41,12 @@ function return_hour(hour) {
   }
 }
 
-
+//this function is use to call back to it when saving into localstorage
 function savedata(){
 localStorage.setItem(storage_item,JSON.stringify(schedule))
 }
 
+//this is checking local and textarea
 function get_data(){
 var take = JSON.parse(localStorage.getItem(storage_item))
 if (take === null) {
@@ -55,23 +56,25 @@ if (take === null) {
   for(x=9; x<18; x++){
     schedule[x] = take[x]
   }
-  console.log(schedule)
-  
 }
 make_section()
 }
 
+//this function is saving blank text to localstorage
 function create_sch(){
   for (var i = 9; i < 18; i++) {
     schedule[i] = local_text;
   }
   savedata()
 }
+
+//this adds the value of the text to the textarea
 function save_schedule(dixon){
   schedule[dixon] = $("#text-"+ dixon).val()
   savedata()
 }
 
+// this function calls back to the loop that creates the containers for the scheduler
 function make_section() {
 
   for (var index = 9; index < 18; index++) {
@@ -91,19 +94,6 @@ get_data()
 
 // refreshes every second 
 setInterval(gentime,1000);
-
-
-//First you need to get data using localStorage.getItem and then assign it to textarea using .value property
-
-
-
-
-
-
-
-
-
-
 
 
 $(function () {
